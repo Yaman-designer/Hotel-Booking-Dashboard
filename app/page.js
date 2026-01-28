@@ -1,12 +1,18 @@
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center">
-    <button className="bg-primary text-yellow-500 px-4 py-2 rounded">
-  Book now
-</button>
-
+    <div className="p-10 space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Test Card</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p>shadcn/ui is working 🎉</p>
+          <Button className="mt-4">Click me</Button>
+        </CardContent>
+      </Card>
     </div>
   );
 }

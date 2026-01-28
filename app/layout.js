@@ -3,14 +3,14 @@ import "./globals.css";
 
 const cairo = Cairo({
   subsets: ["arabic"],
-  weight: ["400", "600", "700"],   // 👈 مهم
+  weight: ["400", "600", "700"],
   variable: "--font-cairo",
   display: "swap",
 });
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],   // 👈 مهم
+  weight: ["400", "500", "600"],
   variable: "--font-poppins",
   display: "swap",
 });
