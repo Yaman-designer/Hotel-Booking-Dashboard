@@ -1,12 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./app/**/*.{js,jsx}", "./components/**/*.{js,jsx}"],
+  content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}", "./styles/**/*.{css}"],
+
   theme: {
     extend: {
-      colors: {
-        primary: "#2563eb",
-        secondary: "#0f172a",
-        accent: "#f59e0b",
+     colors: {
+        primary: "hsl(var(--primary))",
+        background: "hsl(var(--background))",
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        foreground: "hsl(var(--foreground))", 
+      },
+      borderRadius: {
+        xl: "var(--radius-xl)",
       },
       fontFamily: {
         sans: ["var(--font-poppins)"],
@@ -16,3 +23,4 @@ export default {
   },
   plugins: [],
 };
+

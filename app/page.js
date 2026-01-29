@@ -9,7 +9,7 @@ export default function Home() {
           <CardTitle>Test Card</CardTitle>
         </CardHeader>
         <CardContent>
-          <p>shadcn/ui is working 🎉</p>
+          <p >shadcn/ui is working 🎉</p>
           <Button className="mt-4">Click me</Button>
         </CardContent>
       </Card>
