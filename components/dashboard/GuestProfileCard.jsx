@@ -1,4 +1,5 @@
 import { Phone, Mail } from "lucide-react";
+ {/* TODO RESPONSIVE */}
 
 export default function GuestProfileCard({ guest }) {
   return (
