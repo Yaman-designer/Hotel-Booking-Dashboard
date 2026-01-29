@@ -1,98 +1,79 @@
-import { MessageSquareMore, Bell, Heart, Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { MessageSquare, Bell, Heart, Search, ChevronDown } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
 
 export default function Navbar() {
   return (
-    <header className="w-full h-16  bg-background text-foreground">
+    <header className="w-full h-16 bg-white border-b border-gray-200">
       <div className="flex h-full items-center justify-between px-6">
-        {/* Left */}
-        <div className="flex items-center gap-4">
-          <span className="text-xl font-bold text-primary">
-            Hotel Dashboard
-          </span>
-        </div>
+        {/* Left - Title */}
+        <h1 className="text-xl font-bold text-gray-900">Guest Details</h1>
 
-        {/* Center */}
-        <div className="relative w-72">
+        {/* Center - Search */}
+        <div className="relative w-96">
           <input
             type="text"
             placeholder="Search here"
-            className="
-      w-full h-10 rounded-full
-      bg-blue-100
-      pl-10 pr-10
-      text-sm
-      placeholder:text-muted-foreground
-      border-border
-      focus:outline-none
-      focus:border-primary
-    "
+            className="w-full h-10 rounded-lg bg-gray-50 pl-4 pr-10 text-sm text-gray-900 placeholder:text-gray-400 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
           />
-
-          {/* vertical line */}
-          <span className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-[2px] bg-primary" />
-
-          {/* search icon */}
-          <Search className="absolute right-4 top-1/2 -translate-y-1/2 h-4 w-4 text-primary" />
+          <button className="absolute right-3 top-1/2 -translate-y-1/2">
+            <Search className="h-4 w-4 text-gray-400" />
+          </button>
         </div>
 
-        {/* Right */}
-        <div className="flex items-center gap-8 md:w-96">
-          {/* Profile */}
-          <div className="flex items-center gap-2">
-            <Avatar className="h-7 w-7 flex items-center justify-center">
-              <AvatarImage src="/globe.svg" alt="User Avatar" />
-              <AvatarFallback>H</AvatarFallback>
+        {/* Right - Icons & Profile */}
+        <div className="flex items-center gap-3">
+          {/* Notification Icons with Badges */}
+          <div className="flex items-center gap-1">
+            {/* Messages */}
+            <button className="relative p-2 hover:bg-gray-50 rounded-lg transition-colors">
+              <MessageSquare className="h-5 w-5 text-primary-500" strokeWidth={2} />
+              <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary-500 text-[10px] font-bold text-white">
+                3
+              </span>
+            </button>
+
+            {/* Notifications */}
+            <button className="relative p-2 hover:bg-gray-50 rounded-lg transition-colors">
+              <Bell className="h-5 w-5 text-primary-500" strokeWidth={2} />
+              <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary-500 text-[10px] font-bold text-white">
+                5
+              </span>
+            </button>
+
+            {/* Favorites */}
+            <button className="relative p-2 hover:bg-gray-50 rounded-lg transition-colors">
+              <Heart className="h-5 w-5 text-secondary-500" strokeWidth={2} fill="currentColor" />
+              <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-secondary-500 text-[10px] font-bold text-white">
+                2
+              </span>
+            </button>
+          </div>
+
+          {/* Profile Section */}
+          <div className="flex items-center gap-3 ml-2">
+            {/* Avatar */}
+            <Avatar className="h-10 w-10 ring-2 ring-primary-500">
+              <AvatarImage src="/avatar.jpg" alt="Geovanny" />
+              <AvatarFallback className="bg-primary-500 text-white font-semibold text-sm">
+                GE
+              </AvatarFallback>
             </Avatar>
+            
+            {/* User Info */}
             <div className="flex flex-col">
-              <span className="text-sm font-medium text-primary">John Doe</span>
-              <span className="text-xs text-muted-foreground">Admin</span>
+              <span className="text-sm font-semibold text-gray-900 leading-tight">
+                Geovanny
+              </span>
+              <span className="text-xs text-gray-500 leading-tight">
+                Superadmin
+              </span>
             </div>
           </div>
 
-          {/* Icons */}
-          <div className="flex gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-primary cursor-pointer"
-            >
-              <MessageSquareMore
-                className="h-10 w-10"
-                stroke="hsl(var(--primary))"
-                strokeWidth={3}
-              />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-primary cursor-pointer"
-            >
-              <Bell
-                className="h-10 w-10"
-                stroke="hsl(var(--primary))"
-                strokeWidth={3}
-              />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-primary cursor-pointer"
-            >
-              <Heart
-                className="h-10 w-10"
-                stroke="hsl(var(--primary))"
-                strokeWidth={3}
-              />
-            </Button>
-          </div>
-
-          {/* Language Button */}
-          <button className="flex items-center gap-1 border rounded-full px-3 py-1 text-sm">
+          {/* Language Selector */}
+          <button className="flex items-center gap-1 px-3 py-1.5 ml-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors border border-gray-200">
             EN
-            <span className="text-xs">⌄</span>
+            <ChevronDown className="h-3.5 w-3.5" />
           </button>
         </div>
       </div>
