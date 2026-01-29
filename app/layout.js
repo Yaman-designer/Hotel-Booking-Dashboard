@@ -1,6 +1,5 @@
 import { Cairo, Poppins } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
 const cairo = Cairo({
   subsets: ["arabic"],
   weight: ["400", "600", "700"],
@@ -23,8 +22,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${cairo.variable} ${poppins.variable} antialiased`}>
-        <Navbar />  
+      <body className={`${cairo.variable} ${poppins.variable} antialiased bg-gray-50`}>
+        
         {children}
       </body>
     </html>
