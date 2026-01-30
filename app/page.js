@@ -19,11 +19,17 @@ export default function Home({ children }) {
           }}
         />
         <CurrentBookingCard booking={{
-          guestName: "John Doe",
-          roomNumber: 101,
-          checkInDate: "2023-05-15",
-          checkOutDate: "2023-05-18",
-          status: "Checked In"
+          id: "BK123456",
+          room: {
+            name: "Queen Room Deluxe Suite", 
+            personLength: "2-3",
+            bookingDate: "oct 20th - 24th, 2026",
+            bedType: "Double ",
+          },
+
+
+
+
         }}/>
      
       </div>
