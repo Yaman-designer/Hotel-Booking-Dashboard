@@ -1,7 +1,7 @@
 import { MessageSquare, Bell, Heart, Search, ChevronDown } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
-export default function Navbar() {
+export default function Navbar({onMenuClick}) {
   return (
     <header className="w-full h-16 bg-white border-b border-gray-200">
       <div className="flex h-full items-center justify-between px-6">
