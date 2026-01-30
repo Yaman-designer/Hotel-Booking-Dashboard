@@ -3,7 +3,7 @@ import { Key, UserRound, BedDouble, CalendarDays } from "lucide-react";
 
 export default function CurrentBookingCard({ booking }) {
   return (
-    <div className="p-4 sm:p-6 lg:p-8 bg-white rounded-lg shadow-md w-full mt-6 sm:mt-8 lg:mt-12">
+    <div className="p-4 sm:p-6 lg:p-9 bg-white rounded-lg shadow-md w-full mt-6 sm:mt-8 lg:mt-12">
       <h2 className="text-sm sm:text-base font-bold mb-4">Current Booking</h2>
       
       {/* Mobile: Stack vertically */}

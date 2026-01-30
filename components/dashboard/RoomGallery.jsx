@@ -18,45 +18,55 @@ export default function RoomGallery({ room }) {
   };
 
   return (
-    <div className="relative w-[1000px] overflow-hidden">
+    <div className="relative w-full overflow-hidden">
       {/* Slider */}
       <div
         className="flex gap-4 transition-transform duration-500"
         style={{
-          transform: `translateX(-${index * 288}px)`,
+          transform: `translateX(-${index * 100}%)`,
         }}
       >
         {room.images.map((image, i) => (
-          <img
+          <div
             key={i}
-            src={image}
-            alt={`Room ${i}`}
-            className="w-72 rounded-lg shadow-md flex-shrink-0"
-          />
+            className="
+              flex-shrink-0
+              w-full
+              sm:w-1/2
+              lg:w-1/3
+            "
+          >
+            <img
+              src={image}
+              alt={`Room ${i}`}
+              className="w-full h-56 sm:h-44 object-cover rounded-lg shadow-md"
+            />
+          </div>
         ))}
       </div>
-      {/* buttons */}
-      <div className=" flex  items-center justify-end mt-4 gap-2">
-        {/* Prev */}
+
+      {/* Buttons */}
+      <div className="flex items-center justify-end mt-4 gap-2">
         <button
           onClick={prevSlide}
           disabled={index === 0}
           className="
-                   bg-primary text-white w-9 h-9 rounded-full
-                   flex items-center justify-center shadow-md
-                   disabled:opacity-40"
+            bg-primary text-white w-9 h-9 rounded-full
+            flex items-center justify-center shadow-md
+            disabled:opacity-40
+          "
         >
           ←
         </button>
 
-        {/* Next */}
         <button
           onClick={nextSlide}
           disabled={index === room.images.length - 1}
           className="
-                   bg-primary text-white w-9 h-9 rounded-full
-                   flex items-center justify-center shadow-md
-                   disabled:opacity-40"
+            bg-primary text-white w-9 h-9 rounded-full
+            flex items-center justify-center shadow-md
+            disabled:opacity-40
+          "
         >
           →
         </button>
