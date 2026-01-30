@@ -1,9 +1,9 @@
 import RoomGallery from "@/components/dashboard/RoomGallery";
 import { Key, UserRound, BedDouble, CalendarDays } from "lucide-react";
-
+import RoomFacilities from "./RoomFacilities";
 export default function CurrentBookingCard({ booking }) {
   return (
-    <div className="p-4 sm:p-6 lg:p-9 bg-white rounded-lg shadow-md w-full mt-6 sm:mt-8 lg:mt-12">
+    <div className="p-4 sm:p-6 lg:p-8  bg-white rounded-lg shadow-md w-full mt-6 sm:mt-8 lg:mt-12">
       <h2 className="text-sm sm:text-base font-bold mb-4">Current Booking</h2>
       
       {/* Mobile: Stack vertically */}
@@ -50,7 +50,8 @@ export default function CurrentBookingCard({ booking }) {
           />
         </div>
       </div>
-      
+      {/* RoomFacilities */}
+      <RoomFacilities facilities={"AC,shower,DoubleBed,Towel,CoffeSet,TV,Wifi,Led"} />
       {/* Room Gallery */}
       <RoomGallery
         room={{

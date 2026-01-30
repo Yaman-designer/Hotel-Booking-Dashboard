@@ -34,6 +34,7 @@ export default function RoomGallery({ room }) {
               w-full
               sm:w-1/2
               lg:w-1/3
+              xl:w-1/4
             "
           >
             <img
@@ -46,14 +47,14 @@ export default function RoomGallery({ room }) {
       </div>
 
       {/* Buttons */}
-      <div className="flex items-center justify-end mt-4 gap-2">
+      <div className="flex absolute top-1/2 right-1 gap-2 z-100 transform -translate-y-1/2">
         <button
           onClick={prevSlide}
           disabled={index === 0}
           className="
             bg-primary text-white w-9 h-9 rounded-full
             flex items-center justify-center shadow-md
-            disabled:opacity-40
+            disabled:opacity-0
           "
         >
           ←
@@ -65,7 +66,7 @@ export default function RoomGallery({ room }) {
           className="
             bg-primary text-white w-9 h-9 rounded-full
             flex items-center justify-center shadow-md
-            disabled:opacity-40
+            disabled:opacity-0
           "
         >
           →
