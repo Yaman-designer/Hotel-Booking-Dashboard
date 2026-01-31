@@ -78,7 +78,7 @@ function DetailItem({ icon: Icon, label, value, className = "" }) {
           {label}
         </p>
       </div>
-      <p className="font-extrabold text-xs sm:text-sm text-gray-900">
+      <p className="font-bold text-xs sm:text-sm text-gray-900">
         {value}
       </p>
     </div>

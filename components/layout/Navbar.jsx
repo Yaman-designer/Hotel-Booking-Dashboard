@@ -1,82 +1,81 @@
-import { MessageSquare, Bell, Heart, Search, ChevronDown } from "lucide-react";
+import {
+  MessageSquare,
+  Bell,
+  Heart,
+  Search,
+  ChevronDown,
+  Menu,
+} from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
-export default function Navbar({onMenuClick}) {
+export default function Navbar({ onMenuClick }) {
   return (
-    <header className="w-full h-16 bg-white border-b border-gray-200">
-      <div className="flex h-full items-center justify-between px-6">
-        {/* Left - Title */}
-        <h1 className="text-xl font-bold text-gray-900">Guest Details</h1>
+    <header className="w-full h-16 bg-white border-b">
+      <div className="flex h-full items-center justify-between px-4 lg:px-6">
+        
+        {/* Left */}
+        <div className="flex items-center gap-3">
+          {/* Menu Button - Mobile */}
+          <button onClick={onMenuClick} className="lg:hidden">
+            <Menu className="w-6 h-6" />
+          </button>
 
-        {/* Center - Search */}
-        <div className="relative w-96">
+          <h1 className="text-lg lg:text-xl font-bold text-gray-900">
+            Guest Details
+          </h1>
+        </div>
+
+        {/* Search - Desktop only */}
+        <div className="hidden lg:block relative w-96">
           <input
             type="text"
             placeholder="Search here"
-            className="w-full h-10 rounded-lg bg-gray-50 pl-4 pr-10 text-sm text-gray-900 placeholder:text-gray-400 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+            className="w-full h-10 rounded-lg bg-gray-50 pl-4 pr-10 text-sm border  focus:outline-none   focus:border-transparent focus:ring-2 focus:ring-primary"
           />
-          <button className="absolute right-3 top-1/2 -translate-y-1/2">
-            <Search className="h-4 w-4 text-gray-400" />
-          </button>
+          <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
         </div>
 
-        {/* Right - Icons & Profile */}
+        {/* Right */}
         <div className="flex items-center gap-3">
-          {/* Notification Icons with Badges */}
-          <div className="flex items-center gap-1">
-            {/* Messages */}
-            <button className="relative p-2 hover:bg-gray-50 rounded-lg transition-colors">
-              <MessageSquare className="h-5 w-5 text-primary-500" strokeWidth={2} />
-              <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary-500 text-[10px] font-bold text-white">
-                3
-              </span>
-            </button>
-
-            {/* Notifications */}
-            <button className="relative p-2 hover:bg-gray-50 rounded-lg transition-colors">
-              <Bell className="h-5 w-5 text-primary-500" strokeWidth={2} />
-              <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary-500 text-[10px] font-bold text-white">
-                5
-              </span>
-            </button>
-
-            {/* Favorites */}
-            <button className="relative p-2 hover:bg-gray-50 rounded-lg transition-colors">
-              <Heart className="h-5 w-5 text-secondary-500" strokeWidth={2} fill="currentColor" />
-              <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-secondary-500 text-[10px] font-bold text-white">
-                2
-              </span>
-            </button>
+          
+          {/* Icons - Desktop only */}
+          <div className="hidden lg:flex items-center gap-1">
+            <IconButton icon={MessageSquare} count={3} />
+            <IconButton icon={Bell} count={5} />
+            <IconButton icon={Heart} count={2}   fill="CurrentColor"  />
           </div>
 
-          {/* Profile Section */}
-          <div className="flex items-center gap-3 ml-2">
-            {/* Avatar */}
-            <Avatar className="h-10 w-10 ring-2 ring-primary-500">
-              <AvatarImage src="/avatar.jpg" alt="Geovanny" />
-              <AvatarFallback className="bg-primary-500 text-white font-semibold text-sm">
-                GE
-              </AvatarFallback>
+          {/* Profile */}
+          <div className="flex items-center gap-2">
+            <Avatar className="h-9 w-9  text-gray-900">
+              <AvatarImage src="/avatar.jpg" />
+              <AvatarFallback>GE</AvatarFallback>
             </Avatar>
-            
-            {/* User Info */}
-            <div className="flex flex-col">
-              <span className="text-sm font-semibold text-gray-900 leading-tight">
-                Geovanny
-              </span>
-              <span className="text-xs text-gray-500 leading-tight">
-                Superadmin
-              </span>
+
+            <div className="hidden sm:flex flex-col">
+              <span className="text-sm font-semibold  text-gray-900">Geovanny</span>
+              <span className="text-xs text-gray-500">Superadmin</span>
             </div>
           </div>
 
-          {/* Language Selector */}
-          <button className="flex items-center gap-1 px-3 py-1.5 ml-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors border border-gray-200">
-            EN
-            <ChevronDown className="h-3.5 w-3.5" />
+          {/* Language - Desktop only */}
+          <button className="flex items-center gap-1 px-3 py-1.5 text-sm border rounded-lg  text-gray-900">
+            EN <ChevronDown className="h-4 w-4  text-gray-900" />
           </button>
         </div>
       </div>
     </header>
+  );
+}
+
+/* Helper */
+function IconButton({ icon: Icon, count, color = "primary" }) {
+  return (
+    <button className="relative p-2 hover:bg-gray-50 rounded-lg">
+      <Icon className={`h-5 w-5 text-${color}`} />
+      <span className="absolute top-1 right-1 h-4 w-4 text-[10px] flex items-center justify-center rounded-full bg-primary text-white">
+        {count}
+      </span>
+    </button>
   );
 }

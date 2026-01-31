@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
         className={`${cairo.variable} ${poppins.variable} antialiased bg-gray-50`}
       >
         <div className="flex min-h-screen">
-          <Sidebar open setopen />
+          <Sidebar open={open} setopen={setopen} />
 
           <div className="flex-1 flex flex-col">
             <Navbar

@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -9,6 +10,7 @@ import {
   CalendarDays,
   User,
   ConciergeBell,
+  X,
 } from "lucide-react";
 
 const menu = [
@@ -19,12 +21,25 @@ const menu = [
   { name: "Concierge", href: "/concierge", icon: ConciergeBell },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ open, setopen }) {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 min-h-screen border-r bg-background">
-      <div className="h-16 flex items-center justify-center text-xl font-bold">
+    <aside
+      className={cn(
+        "fixed inset-y-0 left-0 z-20 w-64 border-r bg-background transition-transform duration-300",
+        open ? "translate-x-0" : "-translate-x-full",
+        "lg:translate-x-0 lg:static"
+      )}
+    >
+      {/* زر الإغلاق - موبايل فقط */}
+      <div className="lg:hidden flex justify-end p-4">
+        <Button variant="ghost" onClick={() => setopen(false)}>
+          <X className="w-6 h-6" />
+        </Button>
+      </div>
+
+      <div className="h-16 flex items-center justify-center text-xl font-bold  text-gray-900">
         Hotel
       </div>
 
@@ -52,9 +67,7 @@ export default function Sidebar() {
                     : "group-hover:text-primary"
                 )}
               />
-              <span className="text-sm font-medium">
-                {item.name}
-              </span>
+              <span className="text-sm font-medium">{item.name}</span>
             </Link>
           );
         })}
