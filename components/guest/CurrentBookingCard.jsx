@@ -1,15 +1,14 @@
-import RoomGallery from "@/components/dashboard/RoomGallery";
+import RoomGallery from "@/components/guest/RoomGallery";
 import { Key, UserRound, BedDouble, CalendarDays } from "lucide-react";
 import RoomFacilities from "./RoomFacilities";
 export default function CurrentBookingCard({ booking }) {
   return (
     <div className="p-4 sm:p-6 lg:p-8  bg-white rounded-lg shadow-md w-full mt-6 sm:mt-8 lg:mt-12">
       <h2 className="text-sm sm:text-base font-bold mb-4">Current Booking</h2>
-      
+
       {/* Mobile: Stack vertically */}
       {/* Tablet & Desktop: Grid layout */}
       <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4 mb-6">
-        
         {/* Icon & Room Name - Mobile: Row, Desktop: Grid */}
         <div className="flex items-start gap-4 lg:col-span-5">
           {/* Icon */}
@@ -30,19 +29,19 @@ export default function CurrentBookingCard({ booking }) {
 
         {/* Room Details - Mobile: Grid 2 cols, Desktop: Grid 3 cols */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 lg:col-span-7">
-          <DetailItem 
+          <DetailItem
             icon={UserRound}
             label="Room Capacity"
             value={`${booking.room.personLength} Person`}
           />
-          
-          <DetailItem 
+
+          <DetailItem
             icon={BedDouble}
             label="Bed Type"
             value={booking.room.bedType}
           />
-          
-          <DetailItem 
+
+          <DetailItem
             icon={CalendarDays}
             label="Booking Date"
             value={booking.room.bookingDate}
@@ -51,7 +50,9 @@ export default function CurrentBookingCard({ booking }) {
         </div>
       </div>
       {/* RoomFacilities */}
-      <RoomFacilities facilities={"AC,shower,DoubleBed,Towel,CoffeSet,TV,Wifi,Led"} />
+      <RoomFacilities
+        facilities={"AC,shower,DoubleBed,Towel,CoffeSet,TV,Wifi,Led"}
+      />
       {/* Room Gallery */}
       <RoomGallery
         room={{
@@ -78,9 +79,7 @@ function DetailItem({ icon: Icon, label, value, className = "" }) {
           {label}
         </p>
       </div>
-      <p className="font-bold text-xs sm:text-sm text-gray-900">
-        {value}
-      </p>
+      <p className="font-bold text-xs sm:text-sm text-gray-900">{value}</p>
     </div>
   );
 }
