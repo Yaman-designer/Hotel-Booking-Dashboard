@@ -1,9 +1,8 @@
-import { CalendarDays } from "lucide-react";
-
+import {CalendarDays} from "lucide-react";
 export default function StatsCards() {
   return (
-    <div className="grid grid-cols-5 gap-3 pt-9">
-      <CardsUi 
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8 pt-9">
+      <CardsUi
         className="border-l-secondary-700"
         icon={CalendarDays}
         paragraf="320"
@@ -30,15 +29,16 @@ export default function StatsCards() {
     </div>
   );
 }
-export  function CardsUi({ className, paragraf, title, icon: Icon }) {
+
+export function CardsUi({ className, paragraf, title, icon: Icon }) {
   return (
-    <div className={`w-52 h-24 bg-white shadow-md flex items-center justify-between p-3  border-l-4 rounded-md ${className}`}>
+    <div className={`w-full min-h-[96px] bg-white shadow-md flex items-center justify-between p-4 border-l-4 rounded-lg ${className}`}>
       <div>
-        <p className="text-sm text-gray-500">{title}</p>
-        <h2 className="text-xl font-bold">{paragraf}</h2>
+        <p className="text-xs sm:text-sm text-gray-500">{title}</p>
+        <h2 className="text-lg sm:text-xl font-bold">{paragraf}</h2>
       </div>
 
-      <Icon className="text-gray-400" />
+      <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400" />
     </div>
   );
 }
