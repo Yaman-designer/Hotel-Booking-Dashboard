@@ -76,4 +76,7 @@ export default {  // ← غيّر هون من module.exports
     },
   },
   plugins: [],
+    corePlugins: {
+    preflight: true,
+  },
 };

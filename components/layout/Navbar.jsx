@@ -1,3 +1,6 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import {
   MessageSquare,
   Bell,
@@ -8,11 +11,22 @@ import {
 } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
+const pathTitles = {
+  "/": "Dashboard",
+  "/room": "Room",
+  "/bookings": "Bookings",
+  "/guest": "Guest",
+  "/concierge": "Concierge",
+};
+
 export default function Navbar({ onMenuClick }) {
+  const pathname = usePathname();
+
+  const Title = pathTitles[pathname] || "Page";
+
   return (
     <header className="w-full h-16 bg-white border-b">
       <div className="flex h-full items-center justify-between px-4 lg:px-6">
-        
         {/* Left */}
         <div className="flex items-center gap-3">
           {/* Menu Button - Mobile */}
@@ -20,9 +34,7 @@ export default function Navbar({ onMenuClick }) {
             <Menu className="w-6 h-6" />
           </button>
 
-          <h1 className="text-lg lg:text-xl font-bold text-gray-900">
-            Guest Details
-          </h1>
+          <h1 className="text-lg lg:text-xl font-bold text-gray-900">{Title}</h1>
         </div>
 
         {/* Search - Desktop only */}
@@ -37,12 +49,11 @@ export default function Navbar({ onMenuClick }) {
 
         {/* Right */}
         <div className="flex items-center gap-3">
-          
           {/* Icons - Desktop only */}
           <div className="hidden lg:flex items-center gap-1">
             <IconButton icon={MessageSquare} count={3} />
             <IconButton icon={Bell} count={5} />
-            <IconButton icon={Heart} count={2}   fill="CurrentColor"  />
+            <IconButton icon={Heart} count={2} fill="CurrentColor" />
           </div>
 
           {/* Profile */}

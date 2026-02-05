@@ -42,7 +42,7 @@ export default function Sidebar({ open, setopen }) {
       </div>
 
       <div className="h-16 flex items-center justify-center text-xl font-bold  text-gray-900">
-        Hotel
+       <img src="/larana.png" alt="Logo" className="w-40 h-40 mt-2"/>
       </div>
 
       <nav className="flex flex-col gap-2 px-3">
