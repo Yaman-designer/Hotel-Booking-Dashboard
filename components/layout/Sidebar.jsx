@@ -11,6 +11,7 @@ import {
   User,
   ConciergeBell,
   X,
+  Moon ,
 } from "lucide-react";
 
 const menu = [
@@ -19,12 +20,14 @@ const menu = [
   { name: "Bookings", href: "/bookings", icon: CalendarDays },
   { name: "Guest", href: "/guest", icon: User },
   { name: "Concierge", href: "/concierge", icon: ConciergeBell },
+  // { name: "", href: "", icon: Moon },
 ];
 
 export default function Sidebar({ open, setopen }) {
   const pathname = usePathname();
 
   return (
+    <>
     <aside
       className={cn(
         "fixed inset-y-0 left-0 z-20 w-64 border-r bg-background transition-transform duration-300",
@@ -32,7 +35,6 @@ export default function Sidebar({ open, setopen }) {
         "lg:translate-x-0 lg:static"
       )}
     >
-      {/* زر الإغلاق - موبايل فقط */}
       <div className="lg:hidden flex justify-end p-4">
         <Button variant="ghost" onClick={() => setopen(false)}>
           <X className="w-6 h-6" />
@@ -67,11 +69,18 @@ export default function Sidebar({ open, setopen }) {
                     : "group-hover:text-primary"
                 )}
               />
+             
               <span className="text-sm font-medium">{item.name}</span>
+          
             </Link>
-          );
+           
+          ); 
         })}
+          
       </nav>
+      
     </aside>
+     
+     </>
   );
 }
