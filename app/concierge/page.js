@@ -60,12 +60,13 @@ export default function ConciergeRequests() {
   };
 
   return (
-    <div className="p-6 text-foreground">
-      <h1 className="text-xl font-bold mb-6 text-foreground">
+    <div className="p-4 sm:p-6 text-foreground">
+      <h1 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-foreground">
         Concierge Requests
       </h1>
 
-      <div className="bg-card text-card-foreground border border-border rounded-lg">
+      {/* Desktop / Tablet Table */}
+      <div className="hidden md:block bg-card text-card-foreground border border-border rounded-lg overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow className="border-border">
@@ -87,7 +88,7 @@ export default function ConciergeRequests() {
                   <StatusBadge status={req.status} />
                 </TableCell>
 
-                <TableCell className="text-right space-x-2">
+                <TableCell className="text-right space-x-2 whitespace-nowrap">
                   <Button
                     size="sm"
                     variant="outline"
@@ -97,52 +98,105 @@ export default function ConciergeRequests() {
                     Toggle Status
                   </Button>
 
-                  <AlertDialog
+                  <DeleteDialog
                     open={showDeleteDialog && deleteId === req.id}
                     onOpenChange={setShowDeleteDialog}
-                  >
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        onClick={() => {
-                          setDeleteId(req.id);
-                          setShowDeleteDialog(true);
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </AlertDialogTrigger>
-
-                    <AlertDialogContent className="bg-popover text-popover-foreground border-border">
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>Confirm Delete</AlertDialogTitle>
-                        <AlertDialogDescription className="text-muted-foreground">
-                          هل أنت متأكد من حذف طلب الكونسييرج هذا؟ لا يمكن التراجع عن هذا الإجراء.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-
-                      <AlertDialogFooter>
-                        <AlertDialogCancel className="border-border">
-                          إلغاء
-                        </AlertDialogCancel>
-
-                        <AlertDialogAction
-                          className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                          onClick={confirmDelete}
-                        >
-                          حذف
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
+                    onOpen={() => {
+                      setDeleteId(req.id);
+                      setShowDeleteDialog(true);
+                    }}
+                    onConfirm={confirmDelete}
+                  />
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </div>
+
+      {/* Mobile Cards */}
+      <div className="md:hidden space-y-3">
+        {requests.map((req) => (
+          <div
+            key={req.id}
+            className="bg-card text-card-foreground border border-border rounded-lg p-4 space-y-3"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="font-semibold text-foreground truncate">{req.guest}</p>
+                <p className="text-xs text-muted-foreground">Room: {req.room}</p>
+              </div>
+
+              <StatusBadge status={req.status} />
+            </div>
+
+            <div>
+              <p className="text-xs text-muted-foreground mb-1">Request</p>
+              <p className="text-sm text-foreground break-words">{req.request}</p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => toggleStatus(req.id)}
+                className="border-border w-full"
+              >
+                Toggle Status
+              </Button>
+
+              <DeleteDialog
+                fullWidth
+                open={showDeleteDialog && deleteId === req.id}
+                onOpenChange={setShowDeleteDialog}
+                onOpen={() => {
+                  setDeleteId(req.id);
+                  setShowDeleteDialog(true);
+                }}
+                onConfirm={confirmDelete}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
+  );
+}
+
+/* ✅ Reusable Delete Dialog (نفسه للجدول والموبايل) */
+function DeleteDialog({ open, onOpenChange, onOpen, onConfirm, fullWidth = false }) {
+  return (
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
+      <AlertDialogTrigger asChild>
+        <Button
+          size="sm"
+          variant="destructive"
+          onClick={onOpen}
+          className={fullWidth ? "w-full" : ""}
+        >
+          Delete
+        </Button>
+      </AlertDialogTrigger>
+
+      <AlertDialogContent className="bg-popover text-popover-foreground border-border">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Confirm Delete</AlertDialogTitle>
+          <AlertDialogDescription className="text-muted-foreground">
+            هل أنت متأكد من حذف طلب الكونسييرج هذا؟ لا يمكن التراجع عن هذا الإجراء.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+
+        <AlertDialogFooter>
+          <AlertDialogCancel className="border-border">إلغاء</AlertDialogCancel>
+          <AlertDialogAction
+            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            onClick={onConfirm}
+          >
+            حذف
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
 
