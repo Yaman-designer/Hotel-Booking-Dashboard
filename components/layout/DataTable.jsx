@@ -12,7 +12,13 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,7 +37,6 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [filter, setFilter] = useState("all");
 
-  // للحقل الجديد لإضافة غرفة (لأن بيانات الحجوزات ما تحتاجه)
   const [newRoom, setNewRoom] = useState({
     roomName: "",
     bedType: "",
@@ -41,26 +46,27 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
     status: "Available",
   });
 
-  // اختيار صف
   const toggleRow = (id) => {
     setSelectedRows((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
     );
   };
 
-  // تحديد/إلغاء تحديد الكل
+  const filteredData = data.filter((item) => {
+    if (filter === "all") return true;
+    return item.status === filter;
+  });
+
   const toggleSelectAll = (checked) => {
     setSelectedRows(checked ? filteredData.map((d) => d.id) : []);
   };
 
-  // حذف الصفوف المحددة
   const confirmDelete = () => {
     setData((prev) => prev.filter((row) => !selectedRows.includes(row.id)));
     setSelectedRows([]);
     setShowDeleteDialog(false);
   };
 
-  // إضافة غرفة جديدة — فقط إذا النوع rooms
   const addRoom = () => {
     if (type !== "rooms") return;
 
@@ -88,7 +94,6 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
     setShowAddDialog(false);
   };
 
-  // تبديل الحالة (Booked <-> Available)
   const toggleStatus = (id) => {
     setData((prev) =>
       prev.map((row) =>
@@ -97,26 +102,21 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
               ...row,
               status: row.status === "Available" ? "Booked" : "Available",
             }
-          : row,
-      ),
+          : row
+      )
     );
   };
-
-  // تصفية حسب الحالة
-  const filteredData = data.filter((item) => {
-    if (filter === "all") return true;
-    return item.status === filter;
-  });
 
   return (
     <div className="space-y-6">
       {/* الفلتر والأزرار */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <Select onValueChange={setFilter} defaultValue="all" className="bg-white">
-          <SelectTrigger className="w-[180px]">
+        <Select onValueChange={setFilter} defaultValue="all">
+          <SelectTrigger className="w-[180px] bg-background border-border text-foreground">
             <SelectValue placeholder="Filter" />
           </SelectTrigger>
-          <SelectContent className="bg-white">
+
+          <SelectContent className="bg-popover text-popover-foreground border-border">
             <SelectItem value="all">All</SelectItem>
             <SelectItem value="Booked">Booked</SelectItem>
             <SelectItem value="Available">Available</SelectItem>
@@ -127,11 +127,11 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
           {type === "rooms" && (
             <Button onClick={() => setShowAddDialog(true)}>Add Room</Button>
           )}
+
           {selectedRows.length > 0 && (
             <Button
               variant="destructive"
               onClick={() => setShowDeleteDialog(true)}
-              className="bg-red-700 text-white"
             >
               Delete ({selectedRows.length})
             </Button>
@@ -142,8 +142,8 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
       {/* جدول سطح المكتب */}
       <Table className="hidden md:table">
         <TableHeader>
-          <TableRow>
-            <TableHead className="w-10">
+          <TableRow className="border-border">
+            <TableHead className="w-10 text-muted-foreground">
               <Checkbox
                 checked={
                   selectedRows.length === filteredData.length &&
@@ -153,23 +153,23 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
                 aria-label="Select all rows"
               />
             </TableHead>
-            {/* الأعمدة حسب النوع */}
+
             {type === "rooms" ? (
               <>
-                <TableHead>Room Name</TableHead>
-                <TableHead>Bed Type</TableHead>
-                <TableHead>Floor</TableHead>
-                <TableHead>Facilities</TableHead>
-                <TableHead>Rate</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead className="text-muted-foreground">Room Name</TableHead>
+                <TableHead className="text-muted-foreground">Bed Type</TableHead>
+                <TableHead className="text-muted-foreground">Floor</TableHead>
+                <TableHead className="text-muted-foreground">Facilities</TableHead>
+                <TableHead className="text-muted-foreground">Rate</TableHead>
+                <TableHead className="text-muted-foreground">Status</TableHead>
               </>
             ) : (
               <>
-                <TableHead>Guest Name</TableHead>
-                <TableHead>Room</TableHead>
-                <TableHead>Check In</TableHead>
-                <TableHead>Check Out</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead className="text-muted-foreground">Guest Name</TableHead>
+                <TableHead className="text-muted-foreground">Room</TableHead>
+                <TableHead className="text-muted-foreground">Check In</TableHead>
+                <TableHead className="text-muted-foreground">Check Out</TableHead>
+                <TableHead className="text-muted-foreground">Status</TableHead>
               </>
             )}
           </TableRow>
@@ -177,23 +177,28 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
 
         <TableBody>
           {filteredData.map((row) => (
-            <TableRow key={row.id}>
+            <TableRow key={row.id} className="border-border">
               <TableCell>
                 <Checkbox
                   checked={selectedRows.includes(row.id)}
                   onCheckedChange={() => toggleRow(row.id)}
-                  aria-label={`Select row ${type === "rooms" ? row.roomName : row.guestName}`}
+                  aria-label={`Select row ${
+                    type === "rooms" ? row.roomName : row.guestName
+                  }`}
                 />
               </TableCell>
 
-              {/* محتوى الصف حسب النوع */}
               {type === "rooms" ? (
                 <>
-                  <TableCell className="font-medium">{row.roomName}</TableCell>
-                  <TableCell>{row.bedType}</TableCell>
-                  <TableCell>{row.floor}</TableCell>
-                  <TableCell className="truncate max-w-xs">{row.facilities}</TableCell>
-                  <TableCell>{row.rate}</TableCell>
+                  <TableCell className="font-medium text-foreground">
+                    {row.roomName}
+                  </TableCell>
+                  <TableCell className="text-foreground">{row.bedType}</TableCell>
+                  <TableCell className="text-foreground">{row.floor}</TableCell>
+                  <TableCell className="truncate max-w-xs text-foreground">
+                    {row.facilities}
+                  </TableCell>
+                  <TableCell className="text-foreground">{row.rate}</TableCell>
                   <TableCell>
                     <Button
                       size="sm"
@@ -201,8 +206,8 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
                       onClick={() => toggleStatus(row.id)}
                       className={
                         row.status === "Available"
-                          ? "text-green-700 border-green-300"
-                          : "text-red-700 border-red-300"
+                          ? "border-green-500/40 text-green-600 hover:bg-green-500/10"
+                          : "border-red-500/40 text-red-600 hover:bg-red-500/10"
                       }
                       aria-label={`Toggle status for ${row.roomName}`}
                     >
@@ -212,10 +217,10 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
                 </>
               ) : (
                 <>
-                  <TableCell>{row.guestName}</TableCell>
-                  <TableCell>{row.room}</TableCell>
-                  <TableCell>{row.checkIn}</TableCell>
-                  <TableCell>{row.checkOut}</TableCell>
+                  <TableCell className="text-foreground">{row.guestName}</TableCell>
+                  <TableCell className="text-foreground">{row.room}</TableCell>
+                  <TableCell className="text-foreground">{row.checkIn}</TableCell>
+                  <TableCell className="text-foreground">{row.checkOut}</TableCell>
                   <TableCell>
                     <Button
                       size="sm"
@@ -223,8 +228,8 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
                       onClick={() => toggleStatus(row.id)}
                       className={
                         row.status === "Available"
-                          ? "text-green-700 border-green-300"
-                          : "text-red-700 border-red-300"
+                          ? "border-green-500/40 text-green-600 hover:bg-green-500/10"
+                          : "border-red-500/40 text-red-600 hover:bg-red-500/10"
                       }
                       aria-label={`Toggle status for ${row.guestName}`}
                     >
@@ -243,31 +248,37 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
         {filteredData.map((row) => (
           <div
             key={row.id}
-            className="border rounded-lg p-4 space-y-2 shadow-sm"
+            className="border border-border rounded-lg p-4 space-y-2 shadow-sm bg-card text-card-foreground"
           >
             <div className="flex justify-between items-center">
-              <h3 className="font-semibold">
+              <h3 className="font-semibold text-foreground">
                 {type === "rooms" ? row.roomName : row.guestName}
               </h3>
               <Checkbox
                 checked={selectedRows.includes(row.id)}
                 onCheckedChange={() => toggleRow(row.id)}
-                aria-label={`Select row ${type === "rooms" ? row.roomName : row.guestName}`}
+                aria-label={`Select row ${
+                  type === "rooms" ? row.roomName : row.guestName
+                }`}
               />
             </div>
 
             {type === "rooms" ? (
               <>
-                <div className="text-sm text-muted-foreground">Bed: {row.bedType}</div>
-                <div className="text-sm">Floor: {row.floor}</div>
-                <div className="text-sm truncate">Facilities: {row.facilities}</div>
-                <div className="text-sm">Rate: {row.rate}</div>
+                <div className="text-sm text-muted-foreground">
+                  Bed: {row.bedType}
+                </div>
+                <div className="text-sm text-foreground">Floor: {row.floor}</div>
+                <div className="text-sm truncate text-foreground">
+                  Facilities: {row.facilities}
+                </div>
+                <div className="text-sm text-foreground">Rate: {row.rate}</div>
               </>
             ) : (
               <>
-                <div>Room: {row.room}</div>
-                <div>Check In: {row.checkIn}</div>
-                <div>Check Out: {row.checkOut}</div>
+                <div className="text-foreground">Room: {row.room}</div>
+                <div className="text-foreground">Check In: {row.checkIn}</div>
+                <div className="text-foreground">Check Out: {row.checkOut}</div>
               </>
             )}
 
@@ -277,10 +288,12 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
               onClick={() => toggleStatus(row.id)}
               className={
                 row.status === "Available"
-                  ? "text-green-700 border-green-300"
-                  : "text-red-700 border-red-300"
+                  ? "border-green-500/40 text-green-600 hover:bg-green-500/10"
+                  : "border-red-500/40 text-red-600 hover:bg-red-500/10"
               }
-              aria-label={`Toggle status for ${type === "rooms" ? row.roomName : row.guestName}`}
+              aria-label={`Toggle status for ${
+                type === "rooms" ? row.roomName : row.guestName
+              }`}
             >
               {row.status}
             </Button>
@@ -290,18 +303,23 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
 
       {/* Delete Dialog */}
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-popover text-popover-foreground border-border">
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete {type === "rooms" ? "rooms" : "bookings"}</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to delete the selected {type === "rooms" ? "rooms" : "bookings"}?
+            <AlertDialogTitle>
+              Delete {type === "rooms" ? "rooms" : "bookings"}
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-muted-foreground">
+              Are you sure you want to delete the selected{" "}
+              {type === "rooms" ? "rooms" : "bookings"}?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="border-border">
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={confirmDelete}
-              className="bg-red-700 text-white hover:bg-red-600"
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
               Yes, delete
             </AlertDialogAction>
@@ -312,7 +330,7 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
       {/* Add Dialog (موجود فقط لغرف) */}
       {type === "rooms" && (
         <AlertDialog open={showAddDialog} onOpenChange={setShowAddDialog}>
-          <AlertDialogContent>
+          <AlertDialogContent className="bg-popover text-popover-foreground border-border">
             <AlertDialogHeader>
               <AlertDialogTitle>Add new room</AlertDialogTitle>
             </AlertDialogHeader>
@@ -324,6 +342,7 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
                 onChange={(e) =>
                   setNewRoom({ ...newRoom, roomName: e.target.value })
                 }
+                className="bg-background border-border text-foreground"
               />
               <Input
                 placeholder="Bed type"
@@ -331,11 +350,13 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
                 onChange={(e) =>
                   setNewRoom({ ...newRoom, bedType: e.target.value })
                 }
+                className="bg-background border-border text-foreground"
               />
               <Input
                 placeholder="Floor"
                 value={newRoom.floor}
                 onChange={(e) => setNewRoom({ ...newRoom, floor: e.target.value })}
+                className="bg-background border-border text-foreground"
               />
               <Input
                 placeholder="Facilities"
@@ -343,17 +364,23 @@ export default function DataTable({ data: initialData, type = "rooms" }) {
                 onChange={(e) =>
                   setNewRoom({ ...newRoom, facilities: e.target.value })
                 }
+                className="bg-background border-border text-foreground"
               />
               <Input
                 placeholder="Rate"
                 value={newRoom.rate}
                 onChange={(e) => setNewRoom({ ...newRoom, rate: e.target.value })}
+                className="bg-background border-border text-foreground"
               />
             </div>
 
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={addRoom}>Add</AlertDialogAction>
+              <AlertDialogCancel className="border-border">
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction onClick={addRoom}>
+                Add
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

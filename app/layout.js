@@ -1,10 +1,8 @@
-"use client";
-
+// app/layout.js - Server Component
 import { Cairo, Poppins } from "next/font/google";
 import "./globals.css";
-import Sidebar from "@/components/layout/Sidebar";
-import Navbar from "@/components/layout/Navbar";
-import { useState } from "react";
+import ClientLayout from "@/app/ClientLayout";
+import ThemeProvider from "@/components/common/theme-provider";
 const cairo = Cairo({
   subsets: ["arabic"],
   weight: ["400", "600", "700"],
@@ -18,25 +16,15 @@ const poppins = Poppins({
 });
 
 export default function RootLayout({ children }) {
-  const [open, setopen] = useState(false);
   return (
     <html lang="en">
       <body
         className={`${cairo.variable} ${poppins.variable} antialiased bg-gray-50`}
       >
-        <div className="flex min-h-screen">
-          <Sidebar open={open} setopen={setopen} />
-
-          <div className="flex-1 flex flex-col">
-            <Navbar
-              onMenuClick={() => {
-                setopen(true);
-              }}
-            />
-
-            <main className="flex-1">{children}</main>
-          </div>
-        </div>
+        <ThemeProvider>
+          {" "}
+          <ClientLayout>{children}</ClientLayout>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -3,7 +3,7 @@ import CurrentBookingCard from "@/components/guest/CurrentBookingCard";
 
 export default function Home() {
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 text-foreground">
       <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
         <div className="w-full lg:w-auto lg:flex-shrink-0">
           <GuestProfileCard

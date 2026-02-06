@@ -1,23 +1,19 @@
-"use client"
+"use client";
 
 import {
   RadialBarChart,
   RadialBar,
   ResponsiveContainer,
   PolarAngleAxis,
-} from "recharts"
+} from "recharts";
 
-export default function MiniRadialChart({
-  value,
-  max = 100,
-  color,
-}) {
+export default function MiniRadialChart({ value, max = 100, color }) {
   const data = [
     {
       value: value,
       fill: color,
     },
-  ]
+  ];
 
   return (
     <div className="w-16 h-16 relative">
@@ -31,15 +27,11 @@ export default function MiniRadialChart({
           startAngle={90}
           endAngle={-270}
         >
-          <PolarAngleAxis
-            type="number"
-            domain={[0, max]}
-            tick={false}
-          />
+          <PolarAngleAxis type="number" domain={[0, max]} tick={false} />
 
           <RadialBar
             dataKey="value"
-            background
+            background={{ fill: "hsl(var(--muted))" }}
             cornerRadius={10}
             stroke="none"
           />
@@ -48,10 +40,10 @@ export default function MiniRadialChart({
 
       {/* الرقم بالنص */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-xs font-semibold text-gray-700">
+        <span className="text-xs font-semibold text-foreground">
           {Math.round((value / max) * 100)}%
         </span>
       </div>
     </div>
-  )
+  );
 }
